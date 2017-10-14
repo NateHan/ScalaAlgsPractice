@@ -12,7 +12,7 @@ object Runner {
     println(s"We are in a building of $numOfStairs steps!")
 
     // recursively can be painful for a slow computer, be warned
-    println(s"\n \n Calculated recursively, there are ${calcStepsRecursive(numOfStairs)}" +
+    println(s"\n Calculated recursively, there are ${calcStepsRecursive(numOfStairs)}" +
     s" number of combinations to climb $numOfStairs stairs. It took $totalCallsRecursive method calls.")
 
     // initialize array
@@ -21,7 +21,7 @@ object Runner {
       comboStore(i) = 0
     }
 
-    println(s"\n \n Calculated recursively with memoization, there are ${calcStepsMemoized(numOfStairs)}" +
+    println(s"\n Calculated recursively with memoization, there are ${calcStepsMemoized(numOfStairs)}" +
       s" number of combinations to climb $numOfStairs stairs. It took $totalCallsMemoized method calls.")
   }
 

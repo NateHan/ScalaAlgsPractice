@@ -2,7 +2,7 @@ package BalloonDrop
 
 object DropperRunner {
 
-  val buildingHeight = 10000
+  val buildingHeight = 100000
   val balloonStrength = scala.util.Random.nextInt(50)
 
   def main(args: Array[String]) = {

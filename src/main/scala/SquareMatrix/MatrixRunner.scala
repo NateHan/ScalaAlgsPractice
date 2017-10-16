@@ -18,6 +18,8 @@ object MatrixRunner {
       }
       println("")
     }
+    println("Finding sum of this square within original matrix: ")
+    square.prettyPrint()
     println(s"The sum of the square is: ${getSumOfSquarePointsIterative(square)}")
 
     val sumMatrix: Array[Array[Int]] = generateSumMatrix(matrix)
@@ -41,15 +43,14 @@ object MatrixRunner {
     * @return the sum of the square we passed
     */
   private def getSumOfSquareUsingSumMatrix(sumMatrix:Array[Array[Int]], square:Square): Int = {
-    square.prettyPrint()
-    val(bl, br,tl,tr) = (sumMatrix(square.lower)(square.left),
-      sumMatrix(square.lower)(square.right),
-      sumMatrix(square.upper)(square.left),
-      sumMatrix(square.upper)(square.right))
+    val(bl, br,tl,tr) = (sumMatrix(square.lowerRow)(square.leftCol-1),
+      sumMatrix(square.lowerRow)(square.rightCol),
+      sumMatrix(square.upperRow-1)(square.leftCol-1),
+      sumMatrix(square.upperRow-1)(square.rightCol))
       // return the bottom right square(the whole area)
       // minus the bottom left square and the top right square
       // re-add the top left because you've subtracted it twice
-      println(s"$br - $bl -$tr + $tl")
+      println(s"$br - $bl - $tr + $tl")
       br - bl - tr + tl
   }
 
@@ -79,16 +80,24 @@ object MatrixRunner {
 
   private def getSumOfSquarePointsIterative(square:Square): Int = {
     val allValues = for {
-      i <- square.left to square.right
-      j <- square.lower to square.upper
+      i <- square.leftCol to square.rightCol
+      j <- square.upperRow to square.lowerRow
     } yield matrix(i)(j)
     allValues.sum
   }
 
+  /**
+    * Analyzes the two sets of coordinates and determines which one is which for the square
+    * @param x1
+    * @param y1
+    * @param x2
+    * @param y2
+    * @return a square container object with its dimensions outlined.
+    */
   private def makeSquare(x1:Int, y1:Int, x2:Int, y2:Int): Square = {
-    var(right, left) = if(x1 > x2) (x1,x2) else (x2, x1)
-    var (upper, lower) = if (y1 > y2) (y1, y2) else (y2, y1)
-    Square(upper, lower, left, right)
+    var(leftCol, rightCol) = if(x1 < x2) (x1,x2) else (x2, x1)
+    var (upperRow, lowerRow) = if (y1 < y2) (y1, y2) else (y2, y1)
+    Square(upperRow, lowerRow, leftCol, rightCol)
   }
 
   /**
@@ -105,9 +114,9 @@ object MatrixRunner {
 
 }
 
-case class Square(upper:Int, lower:Int, left:Int, right:Int) {
+case class Square(upperRow:Int, lowerRow:Int, leftCol:Int, rightCol:Int) {
 
-  def prettyPrint() = { println(s"Upper:$upper Lower:$lower left:$left right:$right")}
+  def prettyPrint() = { println(s"Upper Row:$upperRow Lower Row:$lowerRow left row:$leftCol right row:$rightCol")}
 }
 
 

@@ -54,6 +54,19 @@ object MatrixRunner {
       br - bl - tr + tl
   }
 
+  /**
+    * method which takes the original square and adds up all the points between its dimensions
+    * @param square the square within the matrix we are searching
+    * @return the sum of the points within the matrix
+    */
+  private def getSumOfSquarePointsIterative(square:Square): Int = {
+    val allValues = for {
+      i <- square.leftCol to square.rightCol
+      j <- square.upperRow to square.lowerRow
+    } yield matrix(i)(j)
+    allValues.sum
+  }
+
   private def generateSumMatrix(origMatrix:Array[Array[Int]]): Array[Array[Int]] = {
     val size = origMatrix.length
     val sumMatrix = Array.ofDim[Int](size, size)
@@ -77,14 +90,6 @@ object MatrixRunner {
     sumMatrix
   }
 
-
-  private def getSumOfSquarePointsIterative(square:Square): Int = {
-    val allValues = for {
-      i <- square.leftCol to square.rightCol
-      j <- square.upperRow to square.lowerRow
-    } yield matrix(i)(j)
-    allValues.sum
-  }
 
   /**
     * Analyzes the two sets of coordinates and determines which one is which for the square
@@ -116,7 +121,7 @@ object MatrixRunner {
 
 case class Square(upperRow:Int, lowerRow:Int, leftCol:Int, rightCol:Int) {
 
-  def prettyPrint() = { println(s"Upper Row:$upperRow Lower Row:$lowerRow left row:$leftCol right row:$rightCol")}
+  def prettyPrint() = { println(s"Upper Row:$upperRow, Lower Row:$lowerRow, Left Row:$leftCol, Right Row:$rightCol.")}
 }
 
 
